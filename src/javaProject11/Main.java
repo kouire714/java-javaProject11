@@ -18,7 +18,7 @@ public class Main extends JFrame {
 		
 		setTitle("메인화면");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 587, 484);
+		setBounds(100, 100, 600, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
@@ -32,7 +32,7 @@ public class Main extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JButton btnReservationMake = new JButton("예약하기");
+		JButton btnReservationMake = new JButton("방보기");
 		btnReservationMake.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -40,11 +40,11 @@ public class Main extends JFrame {
 		btnReservationMake.setBounds(12, 10, 194, 93);
 		panel.add(btnReservationMake);
 		
-		JButton btnRoomIntro = new JButton("방소개");
+		JButton btnRoomIntro = new JButton("예약수정하기");
 		btnRoomIntro.setBounds(12, 113, 194, 93);
 		panel.add(btnRoomIntro);
 		
-		JButton btnMemberEdit = new JButton("회원정보수정");
+		JButton btnMemberEdit = new JButton("회원정보수정하기");
 		btnMemberEdit.setBounds(12, 216, 194, 93);
 		panel.add(btnMemberEdit);
 		
@@ -61,14 +61,14 @@ public class Main extends JFrame {
 		btnReservationMake.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new RoomCheck();
+				new RoomCheck(mid);
 			}
 		});
 		
 		btnRoomIntro.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//
+				new EditReservation(mid);
 			}
 		});
 		
@@ -82,7 +82,7 @@ public class Main extends JFrame {
 		btnLogout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				System.exit(ABORT);
 			}
 		});
 	}	

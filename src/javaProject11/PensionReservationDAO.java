@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 public class PensionReservationDAO {
 	Connection conn = null;
@@ -58,7 +59,7 @@ public class PensionReservationDAO {
 		PensionReservationVO vo = new PensionReservationVO();
 		int res = 0;
 		try {
-			sql = "select * from customer where id = ? and password = ?";
+			sql = "select * from customer where mid = ? and password = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, password);
@@ -83,7 +84,7 @@ public class PensionReservationDAO {
 		try {
 		sql = "insert into customer values (default, ?, ?, ?, ?, ?, ?, ?)";
 		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, vo.getId());
+		pstmt.setString(1, vo.getmId());
 		pstmt.setString(2, vo.getPassword());
 		pstmt.setString(3, vo.getName());
 		pstmt.setString(4, vo.getBirth());
@@ -104,15 +105,20 @@ public class PensionReservationDAO {
 	// 예약가입
 	public int joinReservation(PensionReservationVO vo) {
 		int res = 0;
+//		try {
+//			if(vo.checkInDate < ) sql = "select * from insa order by name";
+//				else sql = "insert into roomRes value (?, ?, ?, ?, ?, ?, ?)";
+			
 		try {
-			sql = "insert into room value (?, ?, ?, ?, ?, ?)";
+			sql = "insert into roomRes value (?, ?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getId());
-			pstmt.setString(2, vo.getCheckInDate());
-			pstmt.setString(3, vo.getCheckOutDate());
-			pstmt.setBoolean(4, vo.isAnimalExperience());
-			pstmt.setBoolean(5, vo.isBreakfast());
-			pstmt.setBoolean(6, vo.isBbq());
+			pstmt.setString(1, vo.getmId());
+			pstmt.setString(2, vo.getrName());
+			pstmt.setString(3, vo.getCheckInDate());
+			pstmt.setString(4, vo.getCheckOutDate());
+			pstmt.setBoolean(5, vo.isAnimalExperience());
+			pstmt.setBoolean(6, vo.isBreakfast());
+			pstmt.setBoolean(7, vo.isBbq());
 			pstmt.executeUpdate();
 			res = 1;
 		} catch (SQLException e) {
@@ -122,5 +128,99 @@ public class PensionReservationDAO {
 		}
 		return res;
 	}
+
+	public Vector getReservationList() {
+		Vector rsList = new Vector<>();
+		try {
+			sql = "select * from roomRes";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Vector vo = new Vector<>();
+				vo.add(rs.getString("mid"));
+				vo.add(rs.getString("inDate"));
+				vo.add(rs.getString("outDate"));
+				rsList.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+			// e.printStackTrace();
+		} finally {
+			rsClose();
+		}
+		return rsList;
+	}
+
+//	@SuppressWarnings({ "unchecked", "rawtypes" })
+//	//rsListDay = 예약 리스트에서 있는 방 이름 
+//	public Vector getReservationList(Vector rsListDay) {
+//		Vector rsList = new Vector<>();
+//		try {
+//			sql = "select * from roomIntro";
+//			pstmt = conn.prepareStatement(sql);
+//			rs = pstmt.executeQuery();
+//			
+//			while(rs.next()) {
+//				Vector vo = new Vector<>();
+//				
+//				int sw = 1;
+//				
+//					for(int i = 0; i<rsListDay.size(); i++) {
+//						sw = 1;
+//					if(rsListDay.get(i).equals(rs.getString("방이름"))){
+//						System.out.println("방이름 동일 ");
+//						sw = 0;
+//						break;
+//					}
+//
+//				}
+//
+//				if(sw == 1) {
+//					System.out.println("예약 가능 방");
+//					
+//					vo.add(rs.getString("mid"));
+//					vo.add(rs.getString("inDate"));
+//					vo.add(rs.getString("outDate"));
+//					
+//					
+//					rsList.add(vo);
+//				}
+//			}
+//		} catch (SQLException e) {
+//			System.out.println("SQL 오류 : " + e.getMessage());
+//		} finally {
+//			rsClose();
+//		}
+//		return rsList;
+//	}
+//
+//	public Vector getReservationList(String S1 , String E1) {
+//		
+//		Vector vo = new Vector<>();
+//		
+//		try {
+//			sql = "select * from roomRes WHERE outDate > 시작? or 끝 > inDate ";
+//			pstmt = conn.prepareStatement(sql);
+//			
+//			pstmt.execute(S1);
+//			pstmt.execute(E1);
+//			
+//			rs = pstmt.executeQuery();
+//					
+//			while(rs.next()) {
+//				vo.add(rs.getString("mid")); //방이름
+//		}	
+//		} catch (SQLException e) {
+//			System.out.println("SQL 오류 : " + e.getMessage());
+//		} finally {
+//			rsClose();
+//		}
+//		return vo;
+//	}
 	
+	public int updateReservation(PensionReservationVO vo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
