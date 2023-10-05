@@ -1,4 +1,6 @@
-package javaProject11;
+package project11;
+
+import java.sql.Date;
 
 public class PensionReservationVO {
 	private int idx;
@@ -9,17 +11,17 @@ public class PensionReservationVO {
 	private String gender;
 	private String address;
 	private String phone;
-	private String rNum;
 	
 	private String rName;
-	private String checkInDate;
-	private String checkOutDate;
+	private Date checkInDate;
+	private Date checkOutDate;
 	private boolean animalExperience;
 	private boolean breakfast;
 	private boolean bbq;
 	
 	private String rIntro;
-	private String animalIn;
+	private boolean animalIn;
+	
 	public int getIdx() {
 		return idx;
 	}
@@ -68,28 +70,22 @@ public class PensionReservationVO {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getrNum() {
-		return rNum;
-	}
-	public void setrNum(String rNum) {
-		this.rNum = rNum;
-	}
 	public String getrName() {
 		return rName;
 	}
 	public void setrName(String rName) {
 		this.rName = rName;
 	}
-	public String getCheckInDate() {
+	public Date getCheckInDate() {
 		return checkInDate;
 	}
-	public void setCheckInDate(String checkInDate) {
+	public void setCheckInDate(Date checkInDate) {
 		this.checkInDate = checkInDate;
 	}
-	public String getCheckOutDate() {
+	public Date getCheckOutDate() {
 		return checkOutDate;
 	}
-	public void setCheckOutDate(String checkOutDate) {
+	public void setCheckOutDate(Date checkOutDate) {
 		this.checkOutDate = checkOutDate;
 	}
 	public boolean isAnimalExperience() {
@@ -116,19 +112,19 @@ public class PensionReservationVO {
 	public void setrIntro(String rIntro) {
 		this.rIntro = rIntro;
 	}
-	public String getAnimalIn() {
+	public boolean isAnimalIn() {
 		return animalIn;
 	}
-	public void setAnimalIn(String animalIn) {
+	public void setAnimalIn(boolean animalIn) {
 		this.animalIn = animalIn;
 	}
 	
 	@Override
 	public String toString() {
 		return "PensionReservationVO [idx=" + idx + ", mId=" + mId + ", password=" + password + ", name=" + name
-				+ ", birth=" + birth + ", gender=" + gender + ", address=" + address + ", phone=" + phone + ", rNum="
-				+ rNum + ", rName=" + rName + ", checkInDate=" + checkInDate + ", checkOutDate=" + checkOutDate
-				+ ", animalExperience=" + animalExperience + ", breakfast=" + breakfast + ", bbq=" + bbq + ", rIntro="
-				+ rIntro + ", animalIn=" + animalIn + "]";
+				+ ", birth=" + birth + ", gender=" + gender + ", address=" + address + ", phone=" + phone + ", rName="
+				+ rName + ", checkInDate=" + checkInDate + ", checkOutDate=" + checkOutDate + ", animalExperience="
+				+ animalExperience + ", breakfast=" + breakfast + ", bbq=" + bbq + ", rIntro=" + rIntro + ", animalIn="
+				+ animalIn + "]";
 	}
 }

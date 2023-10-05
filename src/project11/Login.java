@@ -1,4 +1,4 @@
-package javaProject11;
+package project11;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -6,8 +6,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -17,14 +19,11 @@ public class Login extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textId;
-	private JTextField textPw;
+	private JPasswordField textPw;
 	
 	PensionReservationDAO dao = new PensionReservationDAO();
 	PensionReservationVO vo;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -44,6 +43,8 @@ public class Login extends JFrame {
 		setBounds(100, 100, 600, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLocationRelativeTo(null);
+		setResizable(false);
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -56,21 +57,28 @@ public class Login extends JFrame {
 		pn2.setLayout(null);
 		
 		JLabel lblId = new JLabel("아이디");
-		lblId.setBounds(27, 60, 96, 47);
+		lblId.setFont(new Font("굴림", Font.PLAIN, 20));
+		lblId.setHorizontalAlignment(SwingConstants.CENTER);
+		lblId.setBounds(50, 58, 100, 50);
 		pn2.add(lblId);
 		
 		JLabel lblPassword = new JLabel("비밀번호");
-		lblPassword.setBounds(27, 119, 96, 47);
+		lblPassword.setFont(new Font("굴림", Font.PLAIN, 20));
+		lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPassword.setBounds(50, 118, 100, 50);
 		pn2.add(lblPassword);
 		
 		textId = new JTextField();
-		textId.setBounds(135, 60, 176, 47);
+		textId.setFont(new Font("굴림", Font.PLAIN, 20));
+		textId.setHorizontalAlignment(SwingConstants.LEFT);
+		textId.setBounds(190, 59, 180, 50);
 		pn2.add(textId);
 		textId.setColumns(10);
 		
-		textPw = new JTextField();
+		textPw = new JPasswordField();
+		textPw.setFont(new Font("굴림", Font.PLAIN, 20));
 		textPw.setColumns(10);
-		textPw.setBounds(135, 119, 176, 47);
+		textPw.setBounds(190, 119, 180, 50);
 		pn2.add(textPw);
 		
 		JPanel pn3 = new JPanel();
@@ -79,19 +87,19 @@ public class Login extends JFrame {
 		pn3.setLayout(null);
 		
 		JButton btnLogin = new JButton("로그인");
-		btnLogin.setBounds(12, 10, 144, 68);
+		btnLogin.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnLogin.setBounds(31, 10, 145, 65);
 		pn3.add(btnLogin);
 		
 		JButton btnMemberShip = new JButton("회원가입");
-		btnMemberShip.setBounds(192, 10, 149, 68);
+		btnMemberShip.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnMemberShip.setBounds(207, 10, 145, 65);
 		pn3.add(btnMemberShip);
 		
 		JButton btnExit = new JButton("종료");
-		btnExit.setBounds(377, 10, 149, 68);
+		btnExit.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnExit.setBounds(383, 10, 145, 65);
 		pn3.add(btnExit);
-		
-		textId.setText("kouire");
-		textPw.setText("1234");
 		
 		JPanel pn1 = new JPanel();
 		pn1.setBounds(12, 10, 560, 95);
@@ -99,7 +107,7 @@ public class Login extends JFrame {
 		pn1.setLayout(null);
 		
 		JLabel lblTitle = new JLabel("펜션 예약 사이트");
-		lblTitle.setFont(new Font("굴림", Font.BOLD, 24));
+		lblTitle.setFont(new Font("굴림", Font.BOLD, 30));
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setBounds(12, 10, 536, 75);
 		pn1.add(lblTitle);
@@ -107,32 +115,31 @@ public class Login extends JFrame {
 		
 		/* ======================================= */
 		
+		// 로그인 버튼
+		// 유효성 검사
 		btnLogin.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String mid = textId.getText();
 				String password = textPw.getText();
-				System.out.println("mid:" + mid);
-				System.out.println("password:" + password);
 				dao.loginIdPassword(mid, password);
-				System.out.println("vo :" + vo);
 				if(dao.loginIdPassword(mid, password) == 1) {
-					System.out.println("로그인에 성공하였습니다.");
-					new Main(mid);//(new getIdSearch(textId))
-					dispose();
+					new Main(mid);
 				} else {
-					System.out.println("존재하지 않는 회원입니다.");
+					JOptionPane.showMessageDialog(null, "존재하지 않는 회원입니다. ");
 				}
 			}
 		});
 		
+		// 회원가입 버튼
 		btnMemberShip.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new Membership();
 			}
 		});
 		
+		// 종료 버튼
 		btnExit.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
